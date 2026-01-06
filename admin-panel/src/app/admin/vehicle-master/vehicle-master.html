@@ -1,0 +1,108 @@
+<div class="container-fluid p-4">
+  <div *ngIf="statusMessage" class="alert alert-success border-0 shadow-sm mb-3 position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050; width: auto; min-width: 250px;">
+    <strong>Success!</strong> {{statusMessage}}
+  </div>
+
+  <div class="card shadow-sm mb-4 border-0">
+    <div class="card-header bg-success text-white py-3">
+      <h5 class="mb-0">{{ vehicleForm.value.id ? 'Edit Vehicle: ' + vehicleForm.value.vehicle_name : 'Add New Vehicle Master' }}</h5>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="vehicleForm" (ngSubmit)="saveVehicle()">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Vehicle Name *</label>
+            <input type="text" formControlName="vehicle_name" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Vehicle Type *</label>
+            <select formControlName="vehicle_type" class="form-select">
+              <option value="" disabled>Select Type</option>
+              <option *ngFor="let type of typeList" [value]="type.id">{{type.Name}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Vehicle Image</label>
+            <div class="d-flex gap-2">
+                <input type="file" id="fileInput" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+                <div *ngIf="vehicleForm.value.image" class="border rounded p-1">
+                    <img [src]="vehicleForm.value.image" height="30">
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label fw-bold">Max Capacity</label>
+            <input type="number" formControlName="max_capacity" class="form-control">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label fw-bold">AC Status</label>
+            <select formControlName="ac_vehicle" class="form-select">
+              <option [value]="1">AC</option>
+              <option [value]="0">Non-AC</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-bold">Status</label>
+            <select formControlName="status" class="form-select">
+              <option [value]="1">Active</option>
+              <option [value]="0">Inactive</option>
+            </select>
+          </div>
+          <div class="col-md-5 d-flex align-items-end gap-2">
+            <button type="button" class="btn btn-outline-secondary px-4" (click)="resetForm()">Clear</button>
+            <button class="btn btn-primary flex-grow-1 py-2 fw-bold" [disabled]="vehicleForm.invalid">
+              {{ vehicleForm.value.id ? 'UPDATE MASTER' : 'SAVE TO MASTER' }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white py-3">
+      <h5 class="mb-0">Existing Master Vehicles</h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+          <tr>
+            <th width="80">Sl.No</th>
+            <th>Image</th>
+            <th>Vehicle Name</th>
+            <th>Capacity</th>
+            <th>AC</th>
+            <th>Status</th> <th class="text-center">Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let v of masterVehicles; let i = index">
+            <td class="fw-bold text-muted">{{ i + 1 }}</td>
+            <td>
+              <img *ngIf="v.image" [src]="v.image" height="40" class="rounded border">
+              <span *ngIf="!v.image" class="text-muted small">No Image</span>
+            </td>
+            <td><strong>{{v.vehicle_name}}</strong></td>
+            <td>{{v.max_capacity}} Pax</td>
+            <td>
+              <span class="badge" [ngClass]="v.ac_vehicle == 1 ? 'bg-info text-dark' : 'bg-secondary'">
+                {{v.ac_vehicle == 1 ? 'AC' : 'Non-AC'}}
+              </span>
+            </td>
+            <td>
+      <span class="badge" [ngClass]="v.status == 1 ? 'bg-success' : 'bg-danger'">
+        {{ v.status == 1 ? 'Active' : 'Inactive' }}
+      </span>
+    </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="editVehicle(v)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteVehicle(v.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

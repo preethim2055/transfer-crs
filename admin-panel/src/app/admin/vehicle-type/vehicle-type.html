@@ -1,0 +1,65 @@
+<div class="container mt-4">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">{{ vehicleTypeForm.value.id ? 'Edit' : 'Add' }} Vehicle Type</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="vehicleTypeForm" (ngSubmit)="onSubmit()">
+        <div class="row align-items-end">
+          <div class="col-md-5">
+            <label class="form-label">Vehicle Type Name</label>
+            <input type="text" formControlName="Name" class="form-control" placeholder="e.g. SUV">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Status</label>
+            <select formControlName="Status" class="form-select">
+              <option [value]="1">Active</option>
+              <option [value]="0">Inactive</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" [disabled]="vehicleTypeForm.invalid" class="btn btn-primary w-100">
+              {{ vehicleTypeForm.value.id ? 'Update' : 'Save' }} Type
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      <h4 class="mb-0">Available Vehicle Types</h4>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th width="80">S.NO</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="typeList.length === 0">
+            <td colspan="4" class="text-center py-3">No data found or loading...</td>
+          </tr>
+           <tr *ngFor="let item of typeList; let i = index">
+           <td>{{ i + 1 }}</td>
+            <td>{{ item.Name }}</td>
+            <td>
+              <span class="badge" [ngClass]="item.Status == 1 ? 'bg-success' : 'bg-danger'">
+                {{ item.Status == 1 ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="editType(item)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteType(item.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

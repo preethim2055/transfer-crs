@@ -1,0 +1,131 @@
+<div class="crs-container p-4">
+  <div class="main-card shadow-sm border-0 mb-4 bg-white">
+    <div class="card-header-gradient p-3">
+      <h6 class="m-0 text-white fw-bold">
+        {{ formMode === 'ADD' ? 'Create New Route' : (formMode === 'EDIT_INFO' ? 'Edit Route Data' : 'Update Prices') }}
+      </h6>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="row">
+        <div [ngClass]="formMode === 'UPDATE_PRICE' ? 'd-none' : 'col-lg-7 border-end'" *ngIf="formMode !== 'UPDATE_PRICE'">
+          <div class="row g-3">
+            <div class="col-md-6" *ngIf="formMode === 'ADD'">
+              <label class="x-small fw-bold text-uppercase">Vehicle Type</label>
+              <select class="form-select custom-input" [(ngModel)]="routeData.vehicle_type_id" (change)="onTypeChange()">
+                <option [ngValue]="null">Select Category</option>
+                <option *ngFor="let t of typeList" [value]="t.id">{{t.Name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6" *ngIf="formMode === 'ADD'">
+              <label class="x-small fw-bold text-uppercase">Vehicle Name</label>
+              <select class="form-select custom-input" [(ngModel)]="routeData.vehicle_name_id">
+                <option [ngValue]="null">Select Vehicle</option>
+                <option *ngFor="let v of filteredVehicles" [value]="v.id">{{v.vehicle_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="x-small fw-bold text-uppercase">Start Point</label>
+              <input type="text" class="form-control custom-input" [(ngModel)]="routeData.starting_point">
+            </div>
+            <div class="col-md-6">
+              <label class="x-small fw-bold text-uppercase">End Point</label>
+              <input type="text" class="form-control custom-input" [(ngModel)]="routeData.ending_point">
+            </div>
+            <div class="col-md-6">
+              <label class="x-small fw-bold text-uppercase">Duration</label>
+              <div class="duration-group-clean">
+                <input type="number" [(ngModel)]="routeData.duration_hours"> <span>Hrs</span>
+                <input type="number" [(ngModel)]="routeData.duration_minutes" class="ms-2"> <span>Min</span>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+              <div class="form-check form-switch ps-5 pb-2">
+                <input class="form-check-input" type="checkbox" id="rt" [(ngModel)]="routeData.return_trip">
+                <label class="form-check-label fw-bold small ms-1" for="rt">Round Trip</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div [ngClass]="formMode === 'UPDATE_PRICE' ? 'col-lg-12' : 'col-lg-5 ps-lg-4'">
+          <div *ngIf="formMode !== 'EDIT_INFO'">
+            <label class="text-primary fw-bold small mb-2 d-block">SEASONAL PRICING</label>
+            <div class="pricing-no-scroll border rounded p-3 bg-light mb-3">
+              <div *ngFor="let s of routeData.seasons; let i = index" class="d-flex align-items-center mb-2">
+                <input type="date" [(ngModel)]="s.start_date" class="form-control form-control-sm me-1">
+                <input type="date" [(ngModel)]="s.end_date" class="form-control form-control-sm me-1">
+                <input type="number" class="price-box" [(ngModel)]="s.base_price" placeholder="0.00">
+                <button class="btn btn-sm text-danger ms-1" (click)="removeSeason(i)">×</button>
+              </div>
+              <button class="btn btn-sm text-primary p-0 fw-bold" (click)="addSeason()">+ Add Season</button>
+            </div>
+          </div>
+
+          <label class="text-primary fw-bold small mb-2 d-block">REFUND POLICY</label>
+          <div class="policy-card p-3 rounded bg-light border mb-4">
+            <div class="d-flex gap-2 mb-3">
+              <button class="btn btn-sm flex-fill btn-policy" [class.active]="routeData.is_refundable" (click)="routeData.is_refundable = true">Refundable</button>
+              <button class="btn btn-sm flex-fill btn-policy" [class.active]="!routeData.is_refundable" (click)="routeData.is_refundable = false">Non Refundable</button>
+            </div>
+
+            <div *ngIf="routeData.is_refundable" class="row g-2">
+              <div class="col-md-4">
+                <label class="x-small fw-bold">NO. OF DAYS</label>
+                <input type="number" class="form-control form-control-sm" [(ngModel)]="routeData.cancellation_days">
+              </div>
+              <div class="col-md-4">
+                <label class="x-small fw-bold">FEE TYPE</label>
+                <select class="form-select form-select-sm" [(ngModel)]="routeData.cancellation_type">
+                  <option value="PERCENT">Percent (%)</option>
+                  <option value="FIXED">Fixed</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="x-small fw-bold">FEE AMOUNT</label>
+                <input type="number" class="form-control form-control-sm" [(ngModel)]="routeData.cancellation_fee">
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-save-full w-100 fw-bold py-2" (click)="formMode === 'UPDATE_PRICE' ? savePricesOnly() : saveRoute()">
+            {{ formMode === 'UPDATE_PRICE' ? 'UPDATE PRICES' : 'SAVE ROUTE INFO' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card bg-white shadow-sm p-3 rounded border">
+    <table class="table align-middle custom-table">
+      <thead>
+        <tr class="bg-light x-small fw-bold text-secondary border-bottom">
+          <th width="60">S.NO</th>
+          <th>VEHICLE</th>
+          <th>START POINT &rarr; END POINT</th>
+          <th class="text-center">DURATION</th>
+          <th class="text-center">ROUND TRIP</th>
+          <th class="text-end"></th>
+        </tr>
+      </thead>
+      <tbody class="small">
+        <tr *ngFor="let r of allRoutes; let i = index">
+          <td class="text-muted fw-bold">{{ i + 1 }}</td>
+          <td class="fw-bold text-dark">{{ getVehicleDisplayName(r) }}</td>
+          <td class="fw-bold">
+            {{ r.starting_point }} <span class="text-primary mx-1">&rarr;</span> {{ r.ending_point }}
+          </td>
+          <td class="text-center text-muted">{{ r.duration_hours }}h {{ r.duration_minutes }}m</td>
+        <td class="text-center text-muted">
+   {{ r.return_trip ? 'Yes' : 'No' }}
+</td>
+          <td class="text-end">
+            <button class="btn btn-edit-full me-1" (click)="editRoute(r)">EDIT INFO</button>
+            <button class="btn btn-price-full me-1" (click)="openPriceUpdate(r)">UPDATE PRICE</button>
+            <button class="btn btn-delete-full" (click)="deleteRoute(r.id)">DELETE</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+.hero-bg {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 60px;
+}
+
+.search-container {
+    margin-top: -60px;
+    position: relative;
+    z-index: 100;
+}
+
+.search-card {
+    background: white;
+    border-radius: 1rem !important;
+}
+
+
+.autosuggest-list {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1050;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+}
+
+.autosuggest-list .list-group-item {
+    cursor: pointer;
+    border: none;
+    padding: 10px 15px;
+}
+
+.autosuggest-list .list-group-item:hover {
+    background-color: #f0f7ff;
+    color: #0d6efd;
+}
+
+.vehicle-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+}
+
+.x-small { font-size: 0.75rem; }
+
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+
+.cancellation-policy-box {
+  background-color: #fff9f9; /* Light reddish tint */
+  border: 1px solid #fee2e2 !important;
+}
+
+.extra-small {
+  font-size: 0.75rem;
+}
+}

@@ -1,0 +1,90 @@
+<div *ngIf="!loading && data" style="display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: #f4f7f6; padding: 40px 20px;">
+
+  <div style="width: 100%; max-width: 850px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden;">
+
+    <div style="padding: 30px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h2 style="margin: 0; font-size: 26px; font-weight: 800; color: #1a202c;">{{ data.vehicle_name }}</h2>
+        <span style="display: inline-block; margin-top: 8px; padding: 4px 12px; background: #3182ce; color: white; font-size: 10px; font-weight: 700; border-radius: 5px; text-transform: uppercase;">
+          {{ data.vehicle_type_name }}
+        </span>
+      </div>
+      <div style="text-align: right;">
+        <span style="font-size: 10px; color: #a0aec0; font-weight: 700; text-transform: uppercase;">Total Fare</span>
+        <div style="font-size: 32px; font-weight: 900; color: #38a169;">₹{{ data.base_price }}</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+
+      <div style="padding: 30px; border-right: 1px solid #f0f0f0;">
+        <div style="height: 200px; background: #f7fafc; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px;">
+          <img [src]="data.image" style="max-height: 160px; width: auto; object-fit: contain;" alt="Vehicle">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1; background: #f7fafc; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7;">
+            <div style="font-size: 9px; color: #718096; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Pax</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2d3748;">{{ data.max_capacity }} Seats</div>
+          </div>
+          <div style="flex: 1; background: #f7fafc; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7;">
+            <div style="font-size: 9px; color: #718096; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Luggage</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2d3748;">2 Large</div>
+          </div>
+          <div style="flex: 1; background: #f7fafc; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7;">
+            <div style="font-size: 9px; color: #718096; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Time</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2d3748;">{{ data.duration_hours }}h {{ data.duration_minutes }}m</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between; background: #fafbfc;">
+        <div>
+          <h4 style="font-size: 11px; font-weight: 800; color: #a0aec0; text-transform: uppercase; margin-bottom: 20px;">Trip Itinerary</h4>
+          <div style="border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 20px; position: relative;">
+            <div style="margin-bottom: 30px; position: relative;">
+              <div style="position: absolute; left: -27px; top: 4px; width: 10px; height: 10px; background: #3182ce; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #3182ce;"></div>
+              <div style="font-size: 9px; font-weight: 800; color: #3182ce; text-transform: uppercase;">Pickup</div>
+              <div style="font-size: 15px; font-weight: 700; color: #2d3748;">{{ data.starting_point }}</div>
+            </div>
+            <div style="position: relative;">
+              <div style="position: absolute; left: -27px; top: 4px; width: 10px; height: 10px; background: #e53e3e; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 1px #e53e3e;"></div>
+              <div style="font-size: 9px; font-weight: 800; color: #e53e3e; text-transform: uppercase;">Drop-off</div>
+              <div style="font-size: 15px; font-weight: 700; color: #2d3748;">{{ data.ending_point }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <div [style.background]="+data.cancellation_fee > 0 ? '#fffaf0' : '#f0fff4'"
+               [style.border]="+data.cancellation_fee > 0 ? '1px solid #feebc8' : '1px solid #c6f6d5'"
+               style="padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+            <h5 style="margin: 0 0 5px 0; font-size: 10px; font-weight: 800; text-transform: uppercase;"
+                [style.color]="+data.cancellation_fee > 0 ? '#7b341e' : '#22543d'">
+                Cancellation Policy
+            </h5>
+
+            <p *ngIf="+data.cancellation_fee > 0" style="font-size: 12px; color: #975a16; margin: 0; line-height: 1.4;">
+              Cancellations within <b>{{ data.cancellation_days }} days</b> of travel will have a cancellation fee of <b>₹{{ data.cancellation_fee }}</b>.
+            </p>
+            <p *ngIf="+data.cancellation_fee === 0" style="font-size: 12px; color: #2f855a; margin: 0; font-weight: 700;">
+              Free Cancellation available!
+            </p>
+          </div>
+
+          <button
+            (click)="onBookNow()"
+            [disabled]="loading"
+            [style.opacity]="loading ? '0.7' : '1'"
+            style="width: 100%; background: #38a169; color: white; border: none; padding: 18px; border-radius: 12px; font-weight: 800; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(56, 161, 105, 0.2);">
+            {{ loading ? 'Processing...' : 'Book Now' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading && !data" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <p style="font-weight: 700; color: #718096;">Loading Vehicle Details...</p>
+</div>

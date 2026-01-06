@@ -1,0 +1,27 @@
+.booking-page { background: #f4f7f9; min-height: 100vh; padding: 20px; color: #333; font-family: sans-serif; }
+.step-header { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+.step { padding: 5px 15px; color: #999; }
+.step.active { color: #10b981; font-weight: bold; border-bottom: 3px solid #10b981; }
+
+.content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto; }
+.main-card, .side-card, .success-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
+/* Success Card UI */
+.success-screen { display: flex; justify-content: center; align-items: flex-start; padding-top: 50px; min-height: 80vh; }
+.success-card { width: 100%; max-width: 550px; text-align: center; border-top: 10px solid #10b981; }
+.check-icon { width: 60px; height: 60px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 20px; }
+
+.voucher-box { border: 2px dashed #ddd; border-radius: 15px; padding: 20px; margin: 30px 0; background: #fafafa; text-align: left; }
+.voucher-box h4 { text-align: center; margin-top: 0; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+.v-row { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.v-price { color: #10b981; font-size: 20px; }
+.v-status { background: #10b981; color: white; padding: 3px 12px; border-radius: 20px; font-size: 12px; }
+
+.v-actions { display: flex; gap: 15px; }
+.btn-print { flex: 1; background: #3b82f6; color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+.btn-home { flex: 1; background: #cbd5e1; color: #475569; border: none; padding: 15px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+
+/* Form Elements */
+input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+.input-row { display: flex; gap: 10px; }
+.btn-next { width: 100%; background: #10b981; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; }

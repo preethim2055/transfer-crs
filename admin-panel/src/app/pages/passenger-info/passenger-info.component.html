@@ -1,0 +1,74 @@
+<div class="booking-page">
+  <div class="step-header">
+    <div class="step" [class.active]="currentStep >= 1">1. Traveler Info</div>
+    <div class="step" [class.active]="currentStep >= 2">2. Payment</div>
+    <div class="step" [class.active]="currentStep === 3">3. Confirmed</div>
+  </div>
+
+  <div class="content-grid" *ngIf="currentStep < 3">
+    <div class="main-card">
+      <h2 *ngIf="currentStep === 1">Traveler Details</h2>
+      <h2 *ngIf="currentStep === 2">Select Payment Method</h2>
+      <p class="ref">Reference: <b>{{ appReference }}</b></p>
+
+      <form [formGroup]="bookingForm" *ngIf="currentStep === 1">
+        <div class="input-row">
+          <input type="text" formControlName="first_name" placeholder="First Name">
+          <input type="text" formControlName="last_name" placeholder="Last Name">
+        </div>
+        <input type="email" formControlName="email" placeholder="Email Address">
+        <input type="text" formControlName="mobile" placeholder="Mobile Number">
+        <textarea formControlName="address" placeholder="Billing Address"></textarea>
+        <button class="btn-next" type="button" (click)="goToPayment()">PROCEED TO PAYMENT</button>
+      </form>
+
+      <div class="payment-ui" *ngIf="currentStep === 2">
+        <div class="pay-box active">Credit/Debit Card</div>
+        <div class="pay-box">UPI / NetBanking</div>
+        <button class="btn-next" type="button" (click)="confirmAndPay()" [disabled]="submitting">
+  {{ submitting ? 'Processing...' : 'CONFIRM & PAY' }}
+</button>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h3>Booking Summary</h3>
+      <div class="price-row">
+        <span>Total Fare</span>
+        <span class="total">₹4000.00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="success-screen" *ngIf="currentStep === 3">
+    <div class="success-card">
+      <div class="success-header">
+        <div class="check-icon">✓</div>
+        <h2>Booking Confirmed!</h2>
+        <p>Thank you for booking with us.</p>
+      </div>
+
+      <div class="voucher-box">
+        <h4>Voucher Details</h4>
+        <div class="v-row">
+          <span>Booking Reference:</span>
+          <strong>{{ appReference }}</strong>
+        </div>
+        <div class="v-row">
+          <span>Route:</span>
+          <strong>Paris to London</strong>
+        </div>
+        <div class="v-row">
+          <span>Total Paid:</span>
+          <strong class="v-price">₹4000.00</strong>
+          <span class="v-status">CONFIRMED</span>
+        </div>
+      </div>
+
+      <div class="v-actions">
+        <button class="btn-print" onclick="window.print()">PRINT VOUCHER</button>
+        <button class="btn-home" (click)="currentStep = 1">BOOK ANOTHER</button>
+      </div>
+    </div>
+  </div>
+</div>

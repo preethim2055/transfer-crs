@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
 import { TransferCrsModule } from './transfer-crs/transfer-crs.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -18,10 +19,11 @@ import { TransferCrsModule } from './transfer-crs/transfer-crs.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // DEV only; set false in prod
+      synchronize: true,
     }),
     VehicleTypeModule,
-    TransferCrsModule
+    TransferCrsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

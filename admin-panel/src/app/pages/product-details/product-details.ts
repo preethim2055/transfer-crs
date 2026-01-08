@@ -70,7 +70,7 @@ onBookNow() {
             "app_reference": appRef,
             "booking_source": "B2C"
           };
-          
+
           return this.api.bookingPost('transfercrs/blocktrip', blockPayload);
         })
       )
@@ -89,4 +89,13 @@ onBookNow() {
         }
       });
   }
+
+getFormattedDetailsFee(details: any): string {
+  if (!details) return '';
+
+  const fee = details.cancellation_fee;
+  const type = details.cancellation_type; 
+
+  return type === 'PERCENT' ? parseFloat(fee) + '%' : '₹' + fee;
+}
 }

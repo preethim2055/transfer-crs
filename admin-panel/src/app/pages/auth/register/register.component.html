@@ -1,0 +1,41 @@
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 100%; max-width: 450px;">
+
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">Trip<span class="text-dark">Go</span></h2>
+      <p class="text-muted small">Create your traveler account</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label small fw-bold text-muted">FIRST NAME</label>
+          <input type="text" class="form-control bg-light border-0" formControlName="first_name">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label small fw-bold text-muted">LAST NAME</label>
+          <input type="text" class="form-control bg-light border-0" formControlName="last_name">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">EMAIL</label>
+        <input type="email" class="form-control bg-light border-0" formControlName="email">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-muted">PASSWORD</label>
+        <input type="password" class="form-control bg-light border-0" formControlName="password">
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 fw-bold py-2 shadow-sm" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'CREATING ACCOUNT...' : 'REGISTER' }}
+      </button>
+
+      <div class="text-center mt-3">
+        <p class="small">Already have an account? <a routerLink="/login" class="text-decoration-none">Sign In</a></p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -29,7 +29,7 @@
           </div>
           <div style="flex: 1; background: #f7fafc; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7;">
             <div style="font-size: 9px; color: #718096; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Luggage</div>
-            <div style="font-size: 14px; font-weight: 700; color: #2d3748;">2 Large</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2d3748;">2 Large Bags</div>
           </div>
           <div style="flex: 1; background: #f7fafc; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7;">
             <div style="font-size: 9px; color: #718096; font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Time</div>
@@ -64,9 +64,7 @@
                 Cancellation Policy
             </h5>
 
-            <p *ngIf="+data.cancellation_fee > 0" style="font-size: 12px; color: #975a16; margin: 0; line-height: 1.4;">
-              Cancellations within <b>{{ data.cancellation_days }} days</b> of travel will have a cancellation fee of <b>₹{{ data.cancellation_fee }}</b>.
-            </p>
+          Cancellations within <b>{{ data.cancellation_days }} days</b> of travel will have a cancellation fee of <b>{{ getFormattedDetailsFee(data) }}</b>.
             <p *ngIf="+data.cancellation_fee === 0" style="font-size: 12px; color: #2f855a; margin: 0; font-weight: 700;">
               Free Cancellation available!
             </p>

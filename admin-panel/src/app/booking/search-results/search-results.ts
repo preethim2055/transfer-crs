@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-results.css']
 })
 export class SearchResultsComponent implements OnInit {
-  // Search parameters matching your Availability API structure
+
   searchParams = {
     starting_point: '',
     ending_point: '',
@@ -30,8 +30,7 @@ export class SearchResultsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // We no longer need to load master vehicles here
-    // because the availability API returns names directly.
+
   }
 
 performSearch() {
@@ -54,10 +53,10 @@ performSearch() {
 
 selectCity(city: string, type: 'pickup' | 'dropoff') {
   if (type === 'pickup') {
-    this.searchParams.starting_point = city; // Update key here
+    this.searchParams.starting_point = city;
     this.pickupSuggestions = [];
   } else {
-    this.searchParams.ending_point = city;   // Update key here
+    this.searchParams.ending_point = city;
     this.dropoffSuggestions = [];
   }
 }
@@ -73,9 +72,6 @@ selectCity(city: string, type: 'pickup' | 'dropoff') {
       }
     });
   }
-
-  // transfercrs.service.ts
-
 
 
 

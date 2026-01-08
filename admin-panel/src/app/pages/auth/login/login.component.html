@@ -1,0 +1,34 @@
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 100%; max-width: 400px;">
+
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">Trip<span class="text-dark">Go</span></h2>
+      <!-- <p class="text-muted small">Enter credentials to access your account</p> -->
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">EMAIL</label>
+        <input type="email" class="form-control bg-light border-0"
+               placeholder="admin@tripgo.com" formControlName="email">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-muted">PASSWORD</label>
+        <input type="password" class="form-control bg-light border-0"
+               placeholder="••••••••" formControlName="password">
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'VERIFYING...' : 'SIGN IN' }}
+      </button>
+
+      <div class="text-center mt-3">
+        <a routerLink="/register" class="small text-decoration-none">Create a User Account</a>
+      </div>
+    </form>
+
+  </div>
+</div>

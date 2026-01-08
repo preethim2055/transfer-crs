@@ -84,7 +84,7 @@ confirmFinalBooking() {
     next: (res: any) => {
       if (res && res.status == 200) {
         console.log('Booking Successful:', res);
-        this.currentStep = 3; 
+        this.currentStep = 3;
         this.submitting = false;
         this.cdr.detectChanges();
       }
@@ -96,4 +96,6 @@ confirmFinalBooking() {
     }
   });
 }
+
+
 }
